@@ -1,0 +1,32 @@
+# referencing CDF 3D resource
+# through modelId, revisionId and nodeId
+type MyModel {
+    id: ID! @id
+    modelId: String!
+    revisionId: String!
+    groups: [MyGroup!] @relation(name:"HAS_MODEL", direction: IN)
+}
+
+type MyGroup {
+    name: String!
+    model: MyModel! @relation(name:"HAS_MODEL", direction: OUT)
+    nodes: [MyNode!] @relation(name: "HAS_NODE", direction: OUT)
+}
+
+type MyNode {
+    group: MyGroup! @relation(name: "HAS_NODE", direction: IN)
+    nodeId: String!
+    comment: String!
+}
+
+# referencing CDF files
+# through fileId
+type MyFavorite {
+    id: ID! @id
+    fileId: String!
+}
+type MyComment {
+    id: ID! @id
+    fileId: String!
+    comment: String!
+}

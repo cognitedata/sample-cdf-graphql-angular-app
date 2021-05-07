@@ -1,0 +1,41 @@
+{
+  "name": "sample-cdf-graphql-angular-app",
+  "version": "0.0.0",
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "11.2.13",
+    "@angular/common": "11.2.13",
+    "@angular/compiler": "11.2.13",
+    "@angular/core": "11.2.13",
+    "@angular/forms": "11.2.13",
+    "@angular/platform-browser": "11.2.13",
+    "@angular/platform-browser-dynamic": "11.2.13",
+    "@angular/router": "11.2.13",
+    "@cognite/itg-cli": "^0.0.1-alpha.0",
+    "@cognite/sdk": "^4.0.4",
+    "angular-in-memory-web-api": "0.11.0",
+    "axios": "^0.21.1",
+    "rxjs": "7.0.0",
+    "tslib": "2.2.0",
+    "zone.js": "0.11.4"
+  },
+  "scripts": {
+    "itg": "itg",
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~0.1102.12",
+    "@angular/cli": "~11.2.12",
+    "@angular/compiler-cli": "~11.2.13",
+    "@types/node": "^15.0.2",
+    "codelyzer": "^6.0.0",
+    "protractor": "~7.0.0",
+    "ts-node": "~9.1.1",
+    "tslint": "~6.1.0",
+    "typescript": "^4.1.3"
+  }
+}
