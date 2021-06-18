@@ -1,0 +1,28 @@
+<mat-progress-spinner *ngIf="group === undefined"></mat-progress-spinner>
+<div *ngIf="group !== undefined">
+  <button mat-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon> Back to All Groups for Model
+  </button>
+  <h3>Group: {{ group.name }}</h3>
+  <button
+    mat-raised-button
+    (click)="onHighlightGroup.emit(true)"
+    color="primary"
+  >
+    Toggle group visibility
+  </button>
+  <p style="margin-top: 12px">3D Nodes in {{ group.name }}</p>
+  <mat-list>
+    <mat-list-item
+      mat-ripple
+      *ngFor="let item of group.nodes"
+      style="cursor: pointer"
+      (click)="selectNode(item.nodeId)"
+    >
+      <div matLine>
+        <span>ID: {{ item.nodeId }}</span>
+        <!-- <span>Comment: {{ item.comment || 'N/A' }}</span> -->
+      </div>
+    </mat-list-item>
+  </mat-list>
+</div>

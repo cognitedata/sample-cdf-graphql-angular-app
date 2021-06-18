@@ -1,0 +1,21 @@
+<div>
+  <h1>3D Models</h1>
+  <mat-list *ngFor="let item of models">
+    <mat-expansion-panel
+      hideToggle
+      [expanded]="item.id === selectedModel"
+      (opened)="onModelSelected(item.id)"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>{{ item.name }}</mat-panel-title>
+      </mat-expansion-panel-header>
+      <div *ngIf="selectedModel === item.id">
+        <p>Revisions</p>
+        <app-cognite-model-revisions-list
+          [modelId]="selectedModel"
+          (newRevisionId)="onRevisionSelected($event)"
+        ></app-cognite-model-revisions-list>
+      </div>
+    </mat-expansion-panel>
+  </mat-list>
+</div>

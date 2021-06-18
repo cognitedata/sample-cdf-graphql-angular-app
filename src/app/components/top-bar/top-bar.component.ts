@@ -1,14 +1,17 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
-  styleUrls: ['./top-bar.component.css']
+  styleUrls: ['./top-bar.component.css'],
 })
 export class TopBarComponent {
-
+  @Input() isLoggedIn: boolean;
+  logout() {
+    localStorage.clear();
+    window.location.href = window.location.href;
+  }
 }
-
 
 /*
 Copyright Google LLC. All Rights Reserved.

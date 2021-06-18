@@ -1,0 +1,12 @@
+<mat-toolbar>
+  <span>CDF Resource <-> ITG Demo</span>
+  <div style="margin-right: 40px"></div>
+  <button [routerLink]="['/']" mat-button *ngIf="isLoggedIn">3D Demo</button>
+  <button mat-button (click)="logout()" *ngIf="isLoggedIn">Logout</button>
+</mat-toolbar>
+
+<!-- 
+Copyright Google LLC. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that
+can be found in the LICENSE file at https://angular.io/license
+-->

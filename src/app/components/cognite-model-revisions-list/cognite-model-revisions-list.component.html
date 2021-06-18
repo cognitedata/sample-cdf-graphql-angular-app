@@ -1,0 +1,12 @@
+<div class="flex">
+  <div style="flex: 1">
+    <mat-list *ngFor="let item of revisions">
+      <mat-list-item role="listitem">
+        <button mat-button (click)="onRevisionSelected(item.id)">
+          {{ item.createdTime.toISOString() }}
+          <mat-icon>arrow_forward</mat-icon>
+        </button></mat-list-item
+      >
+    </mat-list>
+  </div>
+</div>

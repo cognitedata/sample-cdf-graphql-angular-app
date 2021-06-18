@@ -1,0 +1,16 @@
+<div class="wrapper">
+  <p>
+    * By default, if you have not deployed the schema in another tenant (see
+    README.md for more info), the project is on `sample-cdf-graphql-angular-app`
+    in the `aize-dev` tenant.
+  </p>
+  <mat-form-field style="width: 400px">
+    <mat-label>Cognite API Key (aize-dev tenant by default*)</mat-label>
+    <input
+      matInput
+      placeholder="Ex. API key for `aize-dev` tenant"
+      [(ngModel)]="apiKey"
+    />
+  </mat-form-field>
+  <button mat-button (click)="onLogin()">Login</button>
+</div>

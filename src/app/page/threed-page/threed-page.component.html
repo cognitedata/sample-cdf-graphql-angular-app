@@ -1,0 +1,52 @@
+<div class="wrapper">
+  <div class="left">
+    <app-cognite-models-list
+      (onModelAndRevision)="setActiveRevision($event)"
+    ></app-cognite-models-list>
+  </div>
+  <div class="right">
+    <p *ngIf="activeRevision === undefined">
+      Select a 3D Model + Revision to preview it
+    </p>
+    <div class="viewer" *ngIf="activeRevision !== undefined">
+      <app-cognite-threed-viewer
+        [modelId]="activeRevision.modelId"
+        [revisionId]="activeRevision.revisionId"
+        [selectedNodeId]="activeNodeId"
+        [visibleGroupId]="isGroupHightlighted ? activeGroupId : undefined"
+        (onNodeSelect)="setActiveNode($event)"
+      ></app-cognite-threed-viewer>
+    </div>
+    <div class="details" *ngIf="activeRevision !== undefined">
+      <div>
+        <app-itg-groups-list
+          *ngIf="activeGroupId === undefined"
+          (onSelectGroup)="setActiveGroup($event)"
+          [modelId]="activeRevision.modelId"
+          [revisionId]="activeRevision.revisionId"
+        ></app-itg-groups-list>
+        <app-itg-group-details
+          *ngIf="activeGroupId !== undefined"
+          [groupId]="activeGroupId"
+          (onBackClicked)="setActiveGroup(undefined)"
+          (onNodeClicked)="setActiveNode($event)"
+          (onHighlightGroup)="toggleShowVisibleNodes()"
+        ></app-itg-group-details>
+      </div>
+      <div class="node-preview">
+        <app-cognite-threed-node-details
+          *ngIf="activeNodeId !== undefined"
+          [modelId]="activeRevision.modelId"
+          [revisionId]="activeRevision.revisionId"
+          [nodeId]="activeNodeId"
+          [groupId]="activeGroupId"
+          (onClearSelection)="setActiveNode(undefined)"
+        >
+        </app-cognite-threed-node-details>
+        <div *ngIf="activeNodeId === undefined">
+          <h3>Select a node to see the details</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

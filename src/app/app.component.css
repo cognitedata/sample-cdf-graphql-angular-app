@@ -1,5 +1,9 @@
-
-
+.container {
+  margin: 24px;
+  flex: 1;
+  display: block;
+  overflow: hidden;
+}
 
 /*
 Copyright Google LLC. All Rights Reserved.

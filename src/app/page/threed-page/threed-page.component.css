@@ -1,0 +1,36 @@
+.wrapper {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+  height: 100%;
+}
+.wrapper .left {
+  width: 360px;
+  overflow: auto;
+  padding: 6px;
+  margin-top: -6px;
+}
+.wrapper .right {
+  flex: 1;
+  display: flex;
+}
+
+.wrapper .right .viewer {
+  flex: 1;
+}
+.wrapper .right .details {
+  width: 420px;
+  display: flex;
+  flex-direction: column;
+}
+
+.wrapper .right .details > div {
+  flex: 1;
+  overflow: auto;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+.node-preview {
+  padding-top: 12px;
+  border-top: 1px solid grey;
+}
