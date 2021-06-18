@@ -29,7 +29,7 @@
     "itg": "itg",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --output-path dist --base-href /sample-cdf-graphql-angular-app/",
     "lint": "ng lint",
     "e2e": "ng e2e"
   },
@@ -38,6 +38,7 @@
     "@angular/cli": "~11.2.12",
     "@angular/compiler-cli": "~11.2.13",
     "@types/node": "^15.0.2",
+    "angular-cli-ghpages": "1.0.0-rc.2",
     "codelyzer": "^6.0.0",
     "protractor": "~7.0.0",
     "ts-node": "~9.1.1",
