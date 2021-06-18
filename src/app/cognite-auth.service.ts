@@ -1,10 +1,10 @@
-import { Injectable, OnInit } from "@angular/core";
-import { CogniteClient } from "@cognite/sdk";
-import axios from "axios";
-import { BehaviorSubject } from "rxjs";
+import { Injectable, OnInit } from '@angular/core';
+import { CogniteClient } from '@cognite/sdk';
+import axios from 'axios';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root',
 })
 export class CogniteAuthService {
   constructor() {}
@@ -12,7 +12,7 @@ export class CogniteAuthService {
   loggedIn = new BehaviorSubject(false);
 
   sdk: CogniteClient = new CogniteClient({
-    appId: "sample-cdf-graphql-angular-app",
+    appId: 'sample-cdf-graphql-angular-app',
   });
 
   getSdk() {
@@ -20,15 +20,17 @@ export class CogniteAuthService {
   }
 
   async login(apikey: string) {
+    // Validate the APIKEY supplied
     const response = await axios.get(
-      "https://api.cognitedata.com/login/status",
+      'https://api.cognitedata.com/login/status',
       {
         headers: {
-          "api-key": apikey,
+          'api-key': apikey,
         },
       }
     );
 
+    // Login with the APIKEY.
     this.sdk.loginWithApiKey({
       apiKey: apikey,
       project: response.data.data.project,
@@ -39,7 +41,7 @@ export class CogniteAuthService {
 
   async logout() {
     this.sdk = new CogniteClient({
-      appId: "sample-cdf-graphql-angular-app",
+      appId: 'sample-cdf-graphql-angular-app',
     });
   }
 }

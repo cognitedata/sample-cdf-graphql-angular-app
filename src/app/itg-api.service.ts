@@ -135,6 +135,7 @@ export class CogniteITGService {
         .subscribe();
     });
   }
+
   removeNodeFromGroup(nodeId: number, groupId: string) {
     return this.graphqlClient
       .mutate({

@@ -17,6 +17,7 @@ export function createApollo(httpLink: HttpLink): ApolloClientOptions<any> {
     link: ApolloLink.from([
       setContext(() => ({
         headers: {
+          // Add the API key for api request to your data model
           authorization: `Bearer ${localStorage.getItem('API_KEY')}`,
         },
       })),
