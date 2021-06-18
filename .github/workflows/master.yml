@@ -1,31 +1,29 @@
-name: Build Master
+name: Build
 on:
   push:
     branches: [master]
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [12.x]
-    defaults:
-      run:
-        working-directory: ./frontend
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
         with:
-          node-version: ${{ matrix.node-version }}
-      - name: Set NPMKEY variable
+          persist-credentials: false
+
+      - name: Cache node_modules
+        id: cache-modules
+        uses: actions/cache@v1
+        with:
+          path: node_modules
+          key: ${{ runner.OS }}-build-${{ hashFiles('package.json') }}
+
+      - name: Install 🔧
         run: |
-          export NPMKEY=$(echo ${{ secrets.NPMRC_AUTH }} | base64 --decode)
-          echo "::set-output name=NPMKEY::$NPMKEY"
-        id: npm_auth_key
-      - name: 'Create .npmrc'
-        run: echo '${{ steps.npm_auth_key.outputs.NPMKEY }}' > .npmrc
-      - name: Install Packages
-        run: yarn
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
+          yarn install --frozen-lockfile
+          rm .npmrc
+
       - name: Build
         run: yarn build
       - name: Deploy StoryBook
