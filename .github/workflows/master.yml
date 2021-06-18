@@ -1,4 +1,4 @@
-name: Build
+name: Build and Publish
 on:
   push:
     branches: [master]
@@ -31,5 +31,4 @@ jobs:
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
-          folder: ./frontend/build
-          target-folder: dist
+          folder: ./dist
