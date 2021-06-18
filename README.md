@@ -15,7 +15,7 @@ Each of these points be elaborated in another section.
 
 A live version of the demo is deployed here (based off of the `master` branch).
 
-(link)
+*https://cognitedata.github.io/sample-cdf-graphql-angular-app/*
 
 To use the application, you MUST use the `aize-dev` tenant. To run this application in other tenants, clone this application and set up the CLI to deploy the schema to that tenant. The next section will go over this in details.
 
