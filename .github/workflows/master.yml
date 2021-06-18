@@ -32,4 +32,4 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
           branch: gh-pages
           folder: ./frontend/build
-          target-folder: master
+          target-folder: dist
