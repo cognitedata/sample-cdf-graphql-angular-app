@@ -1244,7 +1244,7 @@
                         domElement: domElement
                       }); // Setup a click handler
 
-                      this.viewer.on('click', this._onClick); // Add the model to the viewer.
+                      this.viewer.on('click', this._onClick.bind(this)); // Add the model to the viewer.
 
                       this._addModelToViewer(this.modelId, this.revisionId);
 
