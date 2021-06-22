@@ -1,3 +1,4 @@
 node_modules
 .itgrc
 dist
+.DS_Store
