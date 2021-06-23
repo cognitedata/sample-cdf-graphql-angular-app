@@ -755,7 +755,7 @@ class CogniteThreedViewerComponent {
         return Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"])(this, void 0, void 0, function* () {
             if (this.viewer) {
                 // Get the location of the "click" event.
-                const intersection = this.viewer.getIntersectionFromPixel(offsetX, offsetY);
+                const intersection = yield this.viewer.getIntersectionFromPixel(offsetX, offsetY);
                 // If the "click" has a valid intersection with an object on screen
                 if (intersection) {
                     const currentModel = intersection.model;
@@ -775,19 +775,19 @@ class CogniteThreedViewerComponent {
             if (this.model) {
                 const currentModel = this.model;
                 // Clear all existing node styles
-                yield currentModel.removeAllStyledNodeSets();
+                currentModel.removeAllStyledNodeCollections();
                 // If theres a selection, draw pink box and make all colors for other nodes grey
                 if (selectedNodeId) {
                     // Since the viewer speaks in treeIndex, we need to convert the selected node to treeIndex
                     const selectedTreeIndex = yield currentModel.mapNodeIdToTreeIndex(selectedNodeId);
                     // In the new viewer, we have to set up a node set and apply a rule on it.
                     // Node set created
-                    const newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["ByTreeIndexNodeSet"]([selectedTreeIndex]);
+                    const newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["TreeIndexNodeCollection"]([selectedTreeIndex]);
                     // Adding style to everything NOT in the node set to make them grey
-                    yield currentModel.addStyledNodeSet(new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["InvertedNodeSet"](currentModel, newNodeSet), { color: [100, 100, 100] });
-                    // Adding style to everything in the node set to make them have a pink outline
-                    yield currentModel.addStyledNodeSet(newNodeSet, {
-                        outlineColor: _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["NodeOutlineColor"].Pink,
+                    yield currentModel.assignStyledNodeCollection(new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["InvertedNodeCollection"](currentModel, newNodeSet), { color: [100, 100, 100] });
+                    // Adding style to everything in the node set to make them have a red outline
+                    yield currentModel.assignStyledNodeCollection(newNodeSet, {
+                        outlineColor: _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["NodeOutlineColor"].Red,
                     });
                 }
                 // If theres a visibility filter, ghost all other nodes
@@ -796,9 +796,10 @@ class CogniteThreedViewerComponent {
                     const visibleTreeIndexes = yield Promise.all(visibleNodeIds.map((id) => currentModel.mapNodeIdToTreeIndex(id)));
                     // In the new viewer, we have to set up a node set and apply a rule on it.
                     // Node set created
-                    const newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["ByTreeIndexNodeSet"](visibleTreeIndexes);
+                    const newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["TreeIndexNodeCollection"](visibleTreeIndexes);
                     // Adding style to everything NOT in the node set to make them ghosted (translucent)
-                    yield currentModel.addStyledNodeSet(new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["InvertedNodeSet"](currentModel, newNodeSet), { renderGhosted: true });
+                    currentModel.setDefaultNodeAppearance(_cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["DefaultNodeAppearance"].Ghosted);
+                    currentModel.assignStyledNodeCollection(newNodeSet, _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["DefaultNodeAppearance"].Default);
                 }
             }
         });

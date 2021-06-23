@@ -1366,15 +1366,18 @@
                   switch (_context5.prev = _context5.next) {
                     case 0:
                       if (!this.viewer) {
-                        _context5.next = 10;
+                        _context5.next = 12;
                         break;
                       }
 
-                      // Get the location of the "click" event.
-                      intersection = this.viewer.getIntersectionFromPixel(offsetX, offsetY); // If the "click" has a valid intersection with an object on screen
+                      _context5.next = 3;
+                      return this.viewer.getIntersectionFromPixel(offsetX, offsetY);
+
+                    case 3:
+                      intersection = _context5.sent;
 
                       if (!intersection) {
-                        _context5.next = 10;
+                        _context5.next = 12;
                         break;
                       }
 
@@ -1382,16 +1385,16 @@
 
                       treeIndex = intersection.treeIndex; // Sadly the treeIndex is only used internally for the viewer - we need to next get the nodeId
 
-                      _context5.next = 7;
+                      _context5.next = 9;
                       return currentModel.mapTreeIndexToNodeId(treeIndex);
 
-                    case 7:
+                    case 9:
                       nodeId = _context5.sent;
                       // Great, we have found the nodeId, lets use this
                       this.onNodeSelect.emit(nodeId);
                       this.selectedNodeId = nodeId;
 
-                    case 10:
+                    case 12:
                     case "end":
                       return _context5.stop();
                   }
@@ -1410,64 +1413,60 @@
                   switch (_context6.prev = _context6.next) {
                     case 0:
                       if (!this.model) {
-                        _context6.next = 20;
+                        _context6.next = 19;
                         break;
                       }
 
                       currentModel = this.model; // Clear all existing node styles
 
-                      _context6.next = 4;
-                      return currentModel.removeAllStyledNodeSets();
+                      currentModel.removeAllStyledNodeCollections(); // If theres a selection, draw pink box and make all colors for other nodes grey
 
-                    case 4:
                       if (!selectedNodeId) {
-                        _context6.next = 13;
+                        _context6.next = 12;
                         break;
                       }
 
-                      _context6.next = 7;
+                      _context6.next = 6;
                       return currentModel.mapNodeIdToTreeIndex(selectedNodeId);
 
-                    case 7:
+                    case 6:
                       selectedTreeIndex = _context6.sent;
                       // In the new viewer, we have to set up a node set and apply a rule on it.
                       // Node set created
-                      newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["ByTreeIndexNodeSet"]([selectedTreeIndex]); // Adding style to everything NOT in the node set to make them grey
+                      newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["TreeIndexNodeCollection"]([selectedTreeIndex]); // Adding style to everything NOT in the node set to make them grey
 
-                      _context6.next = 11;
-                      return currentModel.addStyledNodeSet(new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["InvertedNodeSet"](currentModel, newNodeSet), {
+                      _context6.next = 10;
+                      return currentModel.assignStyledNodeCollection(new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["InvertedNodeCollection"](currentModel, newNodeSet), {
                         color: [100, 100, 100]
                       });
 
-                    case 11:
-                      _context6.next = 13;
-                      return currentModel.addStyledNodeSet(newNodeSet, {
-                        outlineColor: _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["NodeOutlineColor"].Pink
+                    case 10:
+                      _context6.next = 12;
+                      return currentModel.assignStyledNodeCollection(newNodeSet, {
+                        outlineColor: _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["NodeOutlineColor"].Red
                       });
 
-                    case 13:
+                    case 12:
                       if (!visibleNodeIds) {
-                        _context6.next = 20;
+                        _context6.next = 19;
                         break;
                       }
 
-                      _context6.next = 16;
+                      _context6.next = 15;
                       return Promise.all(visibleNodeIds.map(function (id) {
                         return currentModel.mapNodeIdToTreeIndex(id);
                       }));
 
-                    case 16:
+                    case 15:
                       visibleTreeIndexes = _context6.sent;
                       // In the new viewer, we have to set up a node set and apply a rule on it.
                       // Node set created
-                      _newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["ByTreeIndexNodeSet"](visibleTreeIndexes); // Adding style to everything NOT in the node set to make them ghosted (translucent)
+                      _newNodeSet = new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["TreeIndexNodeCollection"](visibleTreeIndexes); // Adding style to everything NOT in the node set to make them ghosted (translucent)
 
-                      _context6.next = 20;
-                      return currentModel.addStyledNodeSet(new _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["InvertedNodeSet"](currentModel, _newNodeSet), {
-                        renderGhosted: true
-                      });
+                      currentModel.setDefaultNodeAppearance(_cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["DefaultNodeAppearance"].Ghosted);
+                      currentModel.assignStyledNodeCollection(_newNodeSet, _cognite_reveal__WEBPACK_IMPORTED_MODULE_2__["DefaultNodeAppearance"].Default);
 
-                    case 20:
+                    case 19:
                     case "end":
                       return _context6.stop();
                   }
