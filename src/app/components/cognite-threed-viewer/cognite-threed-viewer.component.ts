@@ -9,12 +9,13 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import {
-  ByTreeIndexNodeSet,
+  TreeIndexNodeCollection,
   Cognite3DModel,
   Cognite3DViewer,
   CognitePointCloudModel,
-  InvertedNodeSet,
+  InvertedNodeCollection,
   NodeOutlineColor,
+  DefaultNodeAppearance,
 } from '@cognite/reveal';
 import { CogniteClient } from '@cognite/sdk';
 import { CogniteAuthService } from 'src/app/cognite-auth.service';
@@ -128,7 +129,7 @@ export class CogniteThreedViewerComponent
   async _onClick({ offsetX, offsetY }: { offsetX: number; offsetY: number }) {
     if (this.viewer) {
       // Get the location of the "click" event.
-      const intersection = this.viewer.getIntersectionFromPixel(
+      const intersection = await this.viewer.getIntersectionFromPixel(
         offsetX,
         offsetY
       );
@@ -154,7 +155,7 @@ export class CogniteThreedViewerComponent
       const currentModel = this.model as Cognite3DModel;
 
       // Clear all existing node styles
-      await currentModel.removeAllStyledNodeSets();
+      currentModel.removeAllStyledNodeCollections();
 
       // If theres a selection, draw pink box and make all colors for other nodes grey
       if (selectedNodeId) {
@@ -165,17 +166,17 @@ export class CogniteThreedViewerComponent
 
         // In the new viewer, we have to set up a node set and apply a rule on it.
         // Node set created
-        const newNodeSet = new ByTreeIndexNodeSet([selectedTreeIndex]);
+        const newNodeSet = new TreeIndexNodeCollection([selectedTreeIndex]);
 
         // Adding style to everything NOT in the node set to make them grey
-        await currentModel.addStyledNodeSet(
-          new InvertedNodeSet(currentModel, newNodeSet),
+        await currentModel.assignStyledNodeCollection(
+          new InvertedNodeCollection(currentModel, newNodeSet),
           { color: [100, 100, 100] }
         );
 
-        // Adding style to everything in the node set to make them have a pink outline
-        await currentModel.addStyledNodeSet(newNodeSet, {
-          outlineColor: NodeOutlineColor.Pink,
+        // Adding style to everything in the node set to make them have a red outline
+        await currentModel.assignStyledNodeCollection(newNodeSet, {
+          outlineColor: NodeOutlineColor.Red,
         });
       }
 
@@ -188,13 +189,11 @@ export class CogniteThreedViewerComponent
 
         // In the new viewer, we have to set up a node set and apply a rule on it.
         // Node set created
-        const newNodeSet = new ByTreeIndexNodeSet(visibleTreeIndexes);
+        const newNodeSet = new TreeIndexNodeCollection(visibleTreeIndexes);
 
         // Adding style to everything NOT in the node set to make them ghosted (translucent)
-        await currentModel.addStyledNodeSet(
-          new InvertedNodeSet(currentModel, newNodeSet),
-          { renderGhosted: true }
-        );
+        currentModel.setDefaultNodeAppearance(DefaultNodeAppearance.Ghosted);
+        currentModel.assignStyledNodeCollection(newNodeSet, DefaultNodeAppearance.Default);
       }
     }
   }
