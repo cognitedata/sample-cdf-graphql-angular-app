@@ -285,6 +285,7 @@ can be found in the LICENSE file at https://angular.io/license
 */
 
 window['process'] = process__WEBPACK_IMPORTED_MODULE_1__;
+window.global = window;
 
 
 /***/ }),

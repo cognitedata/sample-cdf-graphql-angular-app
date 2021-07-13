@@ -10480,6 +10480,7 @@
 
 
       window['process'] = process__WEBPACK_IMPORTED_MODULE_1__;
+      window.global = window;
       /***/
     },
 
