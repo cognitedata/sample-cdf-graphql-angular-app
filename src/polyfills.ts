@@ -71,3 +71,4 @@ can be found in the LICENSE file at https://angular.io/license
 */
 import * as process from 'process';
 window['process'] = process;
+(window as any).global = window;
